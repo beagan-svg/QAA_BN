@@ -15,7 +15,7 @@ fastq files examples: /projects/bgmp/shared/2017_sequencing/demultiplexed/
 34_4H_both_S24_L008_R2_001.fastq.gz 
 ```
 
-#### The per-base N content is somewhat consistent with the quality score plots. There is a slight amount of N per base at the starting bases compared to the quality score plot where there is a quality drop of the beginning. Meaning there is an inverse relationship at the starting bases of both the plots. However for the quality score plot there is a consistent decrease as the base pair increased whereas the quality score plot stayed uniform. 
+#### The per-base N content is somewhat consistent with the quality score plots. There is a slight amount of N per base at the starting bases compared to the quality score plot where there is a quality drop of the beginning. Meaning there is an inverse relationship at the starting bases of both the plots. However for the quality score plot there is a consistent decrease as the base pair increased whereas the quality score plot stayed uniform. However, the base calls after the few bases are still good quality since most of the base calls have an average quality score of 38-40.
 
 ### 4_2C_mbnl_S4_read_1
 ![](4_2C_mbnl_S4_per_base_sequence_quality_r1.png) 
@@ -55,7 +55,7 @@ fastq files examples: /projects/bgmp/shared/2017_sequencing/demultiplexed/
 
 ### 2. Run your quality score plotting script from your Demultiplexing assignment from Bi622. Describe how the FastQC quality score distribution plots compare to your own. If different, propose an explanation. Also, does the runtime differ? If so, why?
 
-#### The FastQC quality score distribution plots are similar to the plots generated with my demultiplex assignments. The runtime does not differ much between the fastqc run time of 1 minute 8 seconds and my demultiplex script average runtime per plot of 12 minute 16 seconds.
+#### The FastQC generate a similar mean distribution to the plots generated with my demultiplex plotting script. This includes a quality drop at the starting base positions of both plots. The runtime differs much between the FastQC run time of 1 minute 8 seconds and my demultiplex script average runtime per plot of 12 minute 16 seconds. The difference in runtime could be due to ineffiencies in my script. Another attribute to consider is that my script is written in Python whereas FastQC is written in Java. Java can sometimes have a faster runtime than Python because Java is a compiled language whereas Python is a interpreted language.
 
 ### 3. Comment on the overall data quality of your two libraries.
 #### The overall data quality of both my libraries were good because the quality scores were consistently high and the per-base N content were low for both r1 and r2. Though r1 has slightly better overall data quality.
@@ -87,6 +87,13 @@ cutadapt -a AGATCGGAAGAGCACACGTCTGAACTCCAGTCA -A AGATCGGAAGAGCGTCGTGTAGGGAAAGAGT
 /projects/bgmp/shared/2017_sequencing/demultiplexed/4_2C_mbnl_S4_L008_R1_001.fastq.gz
 /projects/bgmp/shared/2017_sequencing/demultiplexed/4_2C_mbnl_S4_L008_R2_001.fastq.gz
 ```
+
+### Use your Unix skills to search for the adapter sequences in your datasets and confirm the expected sequence orientations. Report the commands you used, the reasoning behind them, and how you confirmed the adapter sequences.
+
+```
+# zgrep --color <adapter sequence> <read.fastq.gz>
+```
+#### This command searches for sequences in color and for our case the adapter sequence. Typically, the adapter sequence is located towards the right end of each read followed by the barcode. Thus, this shows polymerase synthesize from the 5' to 3' direction and the adapters are located at the 3' end.
 
 ### 6. Use Trimmomatic to quality trim your reads.
 ```
